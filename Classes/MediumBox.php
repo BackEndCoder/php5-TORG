@@ -7,13 +7,13 @@ require_once('Box.php');
 /**
  * MediumBox class
  */
-class MediumBox {
+class MediumBox extends Box {
 	
 	/**
 	 * How many cats can fit in the box
 	 * 
 	 * @var int
 	 */
-	protected $_capacity = 2;
+	public $_capacity = 2;
 	
 }

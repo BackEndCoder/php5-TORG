@@ -7,7 +7,7 @@ require_once('Box.php');
 /**
  * SmallBox class
  */
-class SmallBox {
+class SmallBox extends Box {
 	
 	/**
 	 * How many cats can fit in the box

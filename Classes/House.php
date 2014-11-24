@@ -37,6 +37,7 @@ class House {
 	 */
 	public function __construct() {
 		$this->door = new Door();
+		$this->door->open();
 	}
 	
 	/**
@@ -55,7 +56,14 @@ class House {
 	 * @return int
 	 */
 	public function countSpareBoxSpaces() {
-		
+		 $catsInside = $this->getCatsInside();
+		 $totalCatsInside = count($catsInside);
+		 $capacity = $this->getBoxCapacity();
+		 $spareBoxes = $capacity-$totalCatsInside;
+		 if($spareBoxes<=0){
+		   $spareBoxes = 0;
+		 }
+		 return $spareBoxes;
 	}
 	
 	/**
@@ -73,7 +81,13 @@ class House {
 	 * @return int The number of cats that can fit in boxes in this house
 	 */
 	public function getBoxCapacity() {
-		
+		$boxes = $this->getBoxes();
+		$count = 0;
+		foreach($boxes as $box) {
+			$boxclass = new $box;
+			$count = $count + $box->getCapacity();
+		}
+		return $count;
 	}
 	
 	/**
@@ -88,10 +102,18 @@ class House {
 	/**
 	 * Get all the cats currently sitting in boxes
 	 * 
-	 * @return int
+	 * @return array
 	 */
 	public function getCatsInBoxes() {
-		
+		$boxes = $this->getBoxes();
+		$count = [];
+		foreach($boxes as $box) {
+			$boxclass = new $box;
+			foreach ($box->getCatsInside() as $data) {
+				$count[] = $data;
+			}
+		}
+		return $count;
 	}
 	
 	/**
@@ -119,7 +141,16 @@ class House {
 	 * @return int The number of cats put outside
 	 */
 	public function putCatsOutside() {
-		
-	}
-	
+		$cats_house = $this->getCatsInside();
+		$cats_boxes = $this->getCatsInBoxes();
+		$cats_remaining = [];
+		foreach ($cats_house as $cat_in_house) {
+			if(!in_array($cat_in_house,$cats_boxes)) {
+				$cats_remaining[] = $cat_in_house;
+				$key = array_search($cat_in_house,$this->_cats);
+				unset($this->_cats[$key]);
+			}
+		}
+		return count($cats_remaining);
+	}	
 }

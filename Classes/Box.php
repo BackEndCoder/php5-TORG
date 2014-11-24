@@ -43,7 +43,9 @@ class Box {
 	 * @return int If the cat could fit in the box
 	 */
 	public function fill(Cat $cat) {
-		
+		$this->_cats[] = $cat;
+		$this->_capacity = $this->_capacity - 1;
+		return $this->_capacity;
 	}
 	
 	/**

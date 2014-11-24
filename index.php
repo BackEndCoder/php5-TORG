@@ -63,7 +63,7 @@ $house = new House();
 $boxSizes = array('Large', 'Medium', 'Small');
 $totalBoxes = rand(2, 4);
 
-for ($i=0; $i< $totalBoxes; $i++) {
+for ($i = 0; $i < $totalBoxes; $i++) {
 	$boxType = $boxSizes[array_rand($boxSizes)];
 	$boxClass = $boxType . 'Box';
 	$house->addBox(new $boxClass);
@@ -77,8 +77,8 @@ for ($i=0; $i< $totalCats; $i++) {
 	$number = $i + 1;
 	$cats[] = new Cat($house, $i);
 }
-
-
+/*echo "<pre>";
+print_r($cats);exit;*/
 /*******************************************************************************
  * 
  * -------------------
@@ -108,13 +108,12 @@ test1($cats, $house);
  *           YOU MAY EDIT THE CODE IN THE SECTION BELOW IF YOU WISH
  *
  ******************************************************************************/
-
-
-
-
-
-
-
+for($i = 0; $i < sizeof($cats); $i++) {
+	if( $i % 2 === 1) {
+		$cat = $cats[$i];
+		$cat->goHome();
+	}
+}
 
 /*******************************************************************************
  *                    TEST CASE FOR TASK 2 - DO NOT EDIT
@@ -134,10 +133,17 @@ test2($house, $cats);
  *           YOU MAY EDIT THE CODE IN THE SECTION BELOW IF YOU WISH
  *
  ******************************************************************************/
-
-
-
-
+$cats = $house->getCatsInside();
+$i = 0;
+	foreach ($boxes as $box) {
+	    for(; $i < sizeof($cats);$i = $i+1) {
+			if($box->getCapacity() > 0) {
+				$box->fill($cats[$i]);
+			} else {
+				break;
+			}
+		}
+	}
 
 
 

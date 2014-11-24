@@ -16,5 +16,14 @@
  * @return string A modified output of the plural noun (e.g. "5 cats")
  */
 function pluralise($noun, $count) {
-	
+    if($count != 1) {
+		  	switch ($noun) {
+	      		case "box":
+	          		$noun .= "es";
+	          		break;
+	      		default:
+	    		$noun .= "s";
+  			}
+ 		}
+    return $count . " " . $noun;
 }
